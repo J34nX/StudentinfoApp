@@ -1,0 +1,105 @@
+namespace StudentInfoApp
+{
+    public partial class Form1 : Form
+    {
+        private string firstname, lastname;
+        private int studentid;
+        public Form1()
+        {
+            InitializeComponent();
+            this.firstname = string.Empty;
+            this.lastname = string.Empty;
+            this.studentid = 0;
+        }
+
+        public Form1(string fname, string lname, int idstudent)
+        {
+            InitializeComponent();
+            this.firstname = fname;
+            this.lastname = lname;
+            this.studentid = idstudent;
+        }
+
+        public string Firstname
+        {
+            get { return this.firstname; }
+            set { this.firstname = value; }
+        }
+
+        public string Lastname
+        {
+            get { return this.lastname; }
+            set { this.lastname = value; }
+        }
+        public int Studentid
+        {
+            get { return this.studentid; }
+            set { this.studentid = value; }
+        }
+
+        private bool HaveNum(string input)
+        {
+            return input.Any(char.IsDigit);
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string invalidMessage = "Comlete your input data";
+            string invalidinputMessage = "Name can't contain numbers";
+            string invalidIDMessage = "Student ID cant can't contain letters";
+
+            Firstname = FnameTB.Text;
+            Lastname = LnameTB.Text;   
+
+
+            if (string.IsNullOrWhiteSpace(Firstname) || string.IsNullOrWhiteSpace(Lastname))
+            {
+                MessageBox.Show(invalidMessage);
+                return;
+            }
+
+            if (HaveNum(Firstname) || HaveNum(Lastname))
+            {
+                MessageBox.Show(invalidinputMessage);
+                return;
+            }
+
+            if (!int.TryParse(StudentIDTB.Text,Studentid))
+            {
+                MessageBox.Show(invalidIDMessage);
+                return;
+            }
+
+            FnameTBL.Items.Add(FnameTB.Text);
+            LnameTBL.Items.Add(LnameTB.Text);
+            StudentIDTBL.Items.Add(StudentIDTB.Text);
+
+            StudentIDTB.Text = Studentid.ToString("F2");
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (FnameTBL.Items.Count > 0)
+            {
+                FnameTBL.Items.RemoveAt(FnameTBL.SelectedIndex);
+            }
+
+            if (LnameTBL.Items.Count > 0)
+            {
+                LnameTBL.Items.RemoveAt(LnameTBL.SelectedIndex);
+            }
+
+            if (StudentIDTBL.Items.Count > 0)
+            {
+                StudentIDTBL.Items.RemoveAt(StudentIDTBL.SelectedIndex);
+            }
+            
+        }
+    }
+}
